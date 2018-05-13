@@ -7,15 +7,25 @@
 //
 
 import UIKit
+import CoreLocation
+import CoreBluetooth
+import AVFoundation
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate {
 
     var window: UIWindow?
+    
+    let locationManager = CLLocationManager()
+    let systemSoundID: SystemSoundID = 1016
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        self.enableLocationServices()
+        monitorBeacons()
+        
         return true
     }
 
@@ -40,6 +50,100 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
+    
+    
+    
+    func enableLocationServices() {
+        locationManager.delegate = self
+        
+        switch CLLocationManager.authorizationStatus() {
+        case .notDetermined:
+            // Request when-in-use authorization initially
+            locationManager.requestAlwaysAuthorization()
+            print(".notDetermined")
+            break
+            
+        case .restricted, .denied:
+            // Disable location features
+            //            disableMyLocationBasedFeatures()
+            print(".restricted, .denied")
+            break
+            
+        case .authorizedWhenInUse:
+            // Enable basic location features
+            //            enableMyWhenInUseFeatures()print(".Not determined")
+            print(".authorizedWhenInUse")
+            break
+            
+        case .authorizedAlways:
+            // Enable any of your app's location features
+            //            enableMyAlwaysFeatures()
+            print(".authorizedAlways")
+            break
+        }
+    }
+    
+    func monitorBeacons() {
+        print("monitorBeacons")
+        if CLLocationManager.isMonitoringAvailable(for:
+            CLBeaconRegion.self) {
+            // Match all beacons with the specified UUID
+            let proximityUUID = UUID(uuidString:
+                "00112233-4455-6677-8899-AABBCCDDEEFF")
+            let beaconID = "com.example.myBeaconRegion"
+            
+            // Create the region and begin monitoring it.
+            let region = CLBeaconRegion(proximityUUID: proximityUUID!,
+                                        identifier: beaconID)
+            self.locationManager.startMonitoring(for: region)
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager,
+                         didEnterRegion region: CLRegion) {
+        print("didEnterRegion")
+        if region is CLBeaconRegion {
+            // Start ranging only if the feature is available.
+            if CLLocationManager.isRangingAvailable() {
+                manager.startRangingBeacons(in: region as! CLBeaconRegion)
+                
+                // Store the beacon so that ranging can be stopped on demand.
+                //                beaconsToRange.append(region as! CLBeaconRegion)
+                print("beaconToRange")
+            }
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager,
+                         didRangeBeacons beacons: [CLBeacon],
+                         in region: CLBeaconRegion) {
+        print("didRangeBeacons")
+        if beacons.count > 0 {
+            print("beacons.count: \(beacons.count)")
+            let nearestBeacon = beacons.first!
+            let major = CLBeaconMajorValue(truncating: nearestBeacon.major)
+            let minor = CLBeaconMinorValue(truncating: nearestBeacon.minor)
+            
+            print(major)
+            print(minor)
+            
+            switch nearestBeacon.proximity {
+            case .near, .immediate:
+                // Display information about the relevant exhibit.
+                print(".near")
+                AudioServicesPlaySystemSound (systemSoundID)
+                break
+                
+            default:
+                // Dismiss exhibit information, if it is displayed.
+                print("default")
+                AudioServicesPlaySystemSound (systemSoundID)
+                break
+            }
+        }
+    }
+    
+    
 
 
 }

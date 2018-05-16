@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        self.enableLocationServices()
+//        self.enableLocationServices()
         monitorBeacons()
         
         return true
@@ -52,9 +52,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     }
     
     
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if status == .authorizedAlways {
+            enableLocationServices()
+        }
+    }
+    
+    
     
     func enableLocationServices() {
+        print("enableLocationServices")
         locationManager.delegate = self
+        locationManager.allowsBackgroundLocationUpdates = true
         
         switch CLLocationManager.authorizationStatus() {
         case .notDetermined:
@@ -95,7 +104,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             // Create the region and begin monitoring it.
             let region = CLBeaconRegion(proximityUUID: proximityUUID!,
                                         identifier: beaconID)
+            region.notifyEntryStateOnDisplay = true
+            region.notifyOnEntry = true
+            region.notifyOnExit = true
             self.locationManager.startMonitoring(for: region)
+//            self.locationManager.startRangingBeacons(in: region)
         }
     }
     

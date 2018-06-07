@@ -1,10 +1,13 @@
 # เรียนรู้และทดสอบเขียนแอพ iOS ด้วย Swift เพื่อสแกนหาอุปกรณ์ iBeacon
 โปรเจคนี้ผมพยายามทำให้แอพสามารถสแกนหาอุปกรณ์ beacon ได้ทั้งตอนที่เปิดแอพอยู่, แอพทำงานใน background mode และขณะที่ไม่ได้เปิดแอพ
+
 ถ้าแอพทำงานใน background mode และขณะที่ไม่ได้เปิดแอพ จะมี Notification เตือนให้รู้เมื่อพบอุปกรณ์ Beacon
+
 
 ## เปิดการสแกน Location ใน Background mode
 ขั้นแรกหลังจากสร้างโปรเจคใหม่ ให้ไปเปิดให้สามารถสแกน Location ใน Background mode ได้ โดยทำตามขั้นตอนนี้
 ![screenshot-01](https://raw.githubusercontent.com/golfz/learn-swift-ibeacon/master/screenshot-01.jpg)
+
 
 ## ขอสิทธิในการ monitor location
 ต่อมาให้เพิ่มข้อมูลการขอสิทธิในการ monitor location ในไฟล์ Info.plist
@@ -16,6 +19,7 @@
 <key>NSLocationWhenInUseUsageDescription</key>
 <string>App ต้องใช้งาน Location</string>
 ```
+
 
 ## Code ส่วนที่สำคัญ
 
@@ -31,7 +35,6 @@ class VCMain: ... , CLLocationManagerDelegate
 
 ### สร้าง Object สำหรับ CLLocationManager และ CLBeaconRegion
 ```swift
-// Core Bluetooth properties
 lazy var locationManager: CLLocationManager = {
     let manager = CLLocationManager()
     manager.delegate = self

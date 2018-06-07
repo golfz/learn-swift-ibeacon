@@ -17,9 +17,45 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Monitoring UUID :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w8x-PC-57w">
+                                <rect key="frame" x="123" y="44" width="130" height="18"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <color key="textColor" red="0.75406885150000003" green="0.75408679249999999" blue="0.75407713649999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wPo-UN-aGe">
+                                <rect key="frame" x="169.5" y="70" width="35.5" height="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="AHL-Bj-1zi">
+                                <rect key="frame" x="0.0" y="111" width="375" height="556"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="X2M-cd-ZlI"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="mAA-H3-rV3"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="wPo-UN-aGe" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="1rc-rw-I3p"/>
+                            <constraint firstItem="w8x-PC-57w" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="24" id="9hZ-j1-rM5"/>
+                            <constraint firstItem="wPo-UN-aGe" firstAttribute="top" secondItem="w8x-PC-57w" secondAttribute="bottom" constant="8" id="Il1-al-pCH"/>
+                            <constraint firstItem="AHL-Bj-1zi" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Pt0-cr-LPI"/>
+                            <constraint firstItem="AHL-Bj-1zi" firstAttribute="top" secondItem="wPo-UN-aGe" secondAttribute="bottom" constant="24" id="RPI-UI-Q9X"/>
+                            <constraint firstItem="AHL-Bj-1zi" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="T4k-HZ-ioD"/>
+                            <constraint firstItem="w8x-PC-57w" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="yFf-BO-RPa"/>
+                            <constraint firstItem="AHL-Bj-1zi" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="z0h-Qc-0pw"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="tableview" destination="AHL-Bj-1zi" id="1O2-xY-96B"/>
+                        <outlet property="txtUUID" destination="wPo-UN-aGe" id="ZwN-98-y3o"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

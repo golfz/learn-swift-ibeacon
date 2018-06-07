@@ -1,1 +1,1 @@
-# learn-swift-ibeacon
+# เรียนรู้และทดสอบเขียนแอพ iOS ด้วย Swift เพื่อสแกนหาอุปกรณ์ iBeacon
